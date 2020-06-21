@@ -7,6 +7,31 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [image, setImage] = useState("");
+  let photo = "";
+
+  const uploadPic = () => {
+    if (image) {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "insta-clone");
+      data.append("cloud_name", "makarasu");
+      fetch("https://api.cloudinary.com/v1_1/makarasu/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          photo = data.url;
+        })
+        .then(() => signup({ name, email, password, photo }))
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      signup({ name, email, password });
+    }
+  };
 
   return (
     <App>
@@ -35,9 +60,21 @@ const Signup = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <div className="file-field input">
+              <div className=" btn waves-effect waves-light #ff1744 red accent-3">
+                <span>Upload DP</span>
+                <input
+                  type="file"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+              </div>
+              <div className="file-path-wrapper">
+                <input className="file-path validate" type="text" />
+              </div>
+            </div>
             <button
               className="btn waves-effect waves-light #ff1744 red accent-3"
-              onClick={() => signup({ name, email, password })}
+              onClick={() => uploadPic()}
             >
               Signup
             </button>

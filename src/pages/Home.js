@@ -13,11 +13,14 @@ const Home = () => {
   }, []);
 
   const preload = () => {
-    fetch(`${API}/feed`)
+    fetch(`${API}/posts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         setPics(result);
-        console.log(result);
       });
   };
 
@@ -164,7 +167,7 @@ const Home = () => {
             <div key={item._id}>
               <div className="card home-card">
                 <span className="card-title">
-                  <h5>
+                  <h5 style={{ padding: "7px" }}>
                     <Link
                       to={
                         item.userId !== user._id
@@ -186,7 +189,7 @@ const Home = () => {
                       </i>
                     )}
                   </h5>
-                  <h6>{item.createdAt}</h6>
+                  {/* <h6 style={{ padding: "10px" }}>{item.createdAt}</h6> */}
                 </span>
                 <div className="card-image">
                   <img alt={item.title} src={item.photo} />
@@ -213,7 +216,9 @@ const Home = () => {
                   )}
 
                   <h6>{item.like.length} Likes</h6>
-                  <h6>{item.title}</h6>
+                  <h5>
+                    <b>{item.title}</b>
+                  </h5>
                   <p>{item.body}</p>
                   {item.comment.map((record) => {
                     return (

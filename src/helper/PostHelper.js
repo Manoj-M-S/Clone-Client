@@ -45,3 +45,20 @@ export const CreateaPost = (
     })
     .catch((error) => console.log(error));
 };
+
+export const updateProfilePic = (photo, API, user, token) => {
+  fetch(`${API}/profile/pic/${user._id}`, {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      photo: photo,
+    }),
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.log(err);
+    });
+};

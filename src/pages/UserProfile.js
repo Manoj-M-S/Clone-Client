@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import App from "../App";
 import { isAuthenticated } from "../helper/AuthHelper";
 import { API } from "../backend";
-import { useParams, Link, Redirect } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
+
 const UserProfile = () => {
   const [userProfile, setProfile] = useState([]);
 
@@ -18,21 +19,8 @@ const UserProfile = () => {
       .then((res) => res.json())
       .then((result) => {
         setProfile(result);
-        console.log(result);
       });
   };
-  // const preload = () => {
-  //   fetch(`${API}/profile/${userId}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       setProfile(result);
-  //       console.log(result);
-  //     });
-  // };
 
   const followUser = () => {
     fetch(`${API}/follow`, {
@@ -81,6 +69,7 @@ const UserProfile = () => {
         console.log(err);
       });
   };
+
   return (
     <App>
       <>
@@ -97,7 +86,7 @@ const UserProfile = () => {
             >
               <div>
                 <object
-                  data="https://images.pexels.com/photos/2599039/pexels-photo-2599039.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  data={userProfile.profile}
                   style={{
                     width: "160px",
                     height: "160px",
@@ -129,21 +118,23 @@ const UserProfile = () => {
                   <h6>{userProfile.followers.length} Followers</h6>
                   <h6>{userProfile.following.length} Following</h6>
                 </div>
-                {userProfile.followers.includes(user.name) ? (
-                  <button
-                    className="btn waves-effect waves-light #ff1744 blue accent-3"
-                    onClick={() => unfollowUser()}
-                  >
-                    Unfollow
-                  </button>
-                ) : (
-                  <button
-                    className="btn waves-effect waves-light #ff1744 blue accent-3"
-                    onClick={() => followUser()}
-                  >
-                    Follow
-                  </button>
-                )}
+                <div style={{ padding: "10px 0px " }}>
+                  {userProfile.followers.includes(user.name) ? (
+                    <button
+                      className="btn waves-effect waves-light #ff1744 blue accent-3"
+                      onClick={() => unfollowUser()}
+                    >
+                      Unfollow
+                    </button>
+                  ) : (
+                    <button
+                      className="btn waves-effect waves-light #ff1744 blue accent-3"
+                      onClick={() => followUser()}
+                    >
+                      Follow
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
             <div className="gallery">

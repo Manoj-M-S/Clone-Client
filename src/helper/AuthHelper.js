@@ -52,7 +52,7 @@ export const login = (user) => {
           classes: "#43a047 green darken-1",
         });
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/profile";
         }, 250);
       } else {
         M.toast({
@@ -84,7 +84,7 @@ export const logout = () => {
     })
       .then(() =>
         setTimeout(() => {
-          window.location.href = "/";
+          window.location.href = "/signup";
         }, 250)
       )
       .catch((error) => console.log(error));

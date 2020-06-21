@@ -6,9 +6,14 @@ const NavBar = () => {
   return (
     <nav>
       <div className="nav-wrapper white">
-        <Link to="/" className="brand-logo left">
-          Instagram
-        </Link>
+        {isAuthenticated() ? (
+          <Link to="/" className="brand-logo left">
+            Instagram
+          </Link>
+        ) : (
+          <div className="brand-logo left ">Instagram</div>
+        )}
+
         <ul id="nav-mobile" className="right">
           {!isAuthenticated() && (
             <Fragment>
