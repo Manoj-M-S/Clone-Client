@@ -42,6 +42,7 @@ const NavBar = () => {
                   Create Post
                 </Link>
               </li>
+
               <li>
                 <button
                   className="btn waves-effect waves-light #ff1744 red darken-1"

@@ -71,6 +71,15 @@ nav .brand {
     0 6px 20px 0 rgba(87, 87, 87, 0.19);
 }
 
+.profile-card {
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(71, 71, 71, 0.2),
+    0 6px 20px 0 rgba(87, 87, 87, 0.19);
+}
+
 .field {
   padding: 20px;
   text-align: center;

@@ -13,7 +13,7 @@ const Home = () => {
   }, []);
 
   const preload = () => {
-    fetch(`${API}/posts`, {
+    fetch(`${API}/feed/${user._id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

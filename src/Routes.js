@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import CreatePost from "./pages/CreatePost";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import UserProfile from "./pages/UserProfile";
+import Post from "./pages/Mypost";
 
 const Routes = () => {
   return (
@@ -17,6 +18,7 @@ const Routes = () => {
         <Route path="/profile" exact component={Profile} />
         <Route path="/create" exact component={CreatePost} />
         <Route path="/profile/:userId" exact component={UserProfile} />
+        <Route path="/editpost/:postId" exact component={Post} />
       </Switch>
     </BrowserRouter>
   );

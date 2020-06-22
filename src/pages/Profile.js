@@ -4,7 +4,7 @@ import { isAuthenticated } from "../helper/AuthHelper";
 import { updateProfilePic } from "../helper/PostHelper";
 import { API } from "../backend";
 import M from "materialize-css";
-
+import { Link } from "react-router-dom";
 const Profile = () => {
   const [mypics, setPics] = useState([]);
   const [userDetails, setDetails] = useState([]);
@@ -70,6 +70,26 @@ const Profile = () => {
       );
   };
 
+  const deletePost = (postid) => {
+    fetch(`${API}/post/delete/${user._id}/${postid}`, {
+      method: "delete",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const newData = mypics.filter((item) => {
+          return item._id !== result._id;
+        });
+        setPics(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  // const editpost = (postid) => {};
+
   return (
     <App>
       {userDetails.username && dp.length > 0 ? (
@@ -134,12 +154,38 @@ const Profile = () => {
           <div className="gallery">
             {mypics.map((item) => {
               return (
-                <img
-                  key={item._id}
-                  className="item"
-                  alt={item.title}
-                  src={item.photo}
-                />
+                <div key={item._id}>
+                  <div className="card profile-card">
+                    <div className="card-content">
+                      <div className="card-image">
+                        <img
+                          key={item._id}
+                          className="item"
+                          alt={item.title}
+                          src={item.photo}
+                        />
+                      </div>
+                      <i
+                        className="material-icons"
+                        style={{ float: "right" }}
+                        onClick={() => {
+                          deletePost(item._id);
+                        }}
+                      >
+                        delete
+                      </i>
+                      <i
+                        className="material-icons"
+                        style={{ float: "left" }}
+                        onClick={() => {
+                          window.location.href = `/editpost/${item._id}/`;
+                        }}
+                      >
+                        create
+                      </i>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>
