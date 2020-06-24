@@ -4,7 +4,6 @@ import { isAuthenticated } from "../helper/AuthHelper";
 import { updateProfilePic } from "../helper/PostHelper";
 import { API } from "../backend";
 import M from "materialize-css";
-import { Link } from "react-router-dom";
 const Profile = () => {
   const [mypics, setPics] = useState([]);
   const [userDetails, setDetails] = useState([]);
@@ -63,7 +62,6 @@ const Profile = () => {
         fetch(`${API}/profile/${user._id}`)
           .then((res) => res.json())
           .then((result) => {
-            console.log(result);
             setDetails(result);
             setDp(result.profile);
           })

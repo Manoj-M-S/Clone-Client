@@ -38,6 +38,11 @@ const NavBar = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/following" className="brand">
+                  Following Posts
+                </Link>
+              </li>
+              <li>
                 <Link to="/create" className="brand">
                   Create Post
                 </Link>

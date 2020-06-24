@@ -4,7 +4,7 @@ import { isAuthenticated } from "../helper/AuthHelper";
 import { API } from "../backend";
 import { Redirect, Link } from "react-router-dom";
 
-const Home = () => {
+const Following = () => {
   const [pics, setPics] = useState([]);
   const { user, token } = isAuthenticated();
 
@@ -13,7 +13,7 @@ const Home = () => {
   }, []);
 
   const preload = () => {
-    fetch(`${API}/posts`, {
+    fetch(`${API}/feed/${user._id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -261,4 +261,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Following;

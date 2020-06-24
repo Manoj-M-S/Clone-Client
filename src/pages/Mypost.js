@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import App from "../App";
 import { isAuthenticated } from "../helper/AuthHelper";
 import { API } from "../backend";
-import { Redirect, Link, useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { Update } from "../helper/PostHelper";
+
 const Post = () => {
   const [pics, setPics] = useState([]);
   const { user, token } = isAuthenticated();
@@ -25,11 +26,13 @@ const Post = () => {
       .then((res) => res.json())
       .then((result) => {
         setPics(result);
+        setTitle(result.title);
+        setBody(result.body);
+        setImage(result.photo);
       });
   };
 
   let photo = "";
-  console.log(postId);
   const UpdatePost = () => {
     const data = new FormData();
     data.append("file", image);
@@ -49,139 +52,6 @@ const Post = () => {
       });
   };
 
-  //   const likePost = (id) => {
-  //     fetch(`${API}/like`, {
-  //       method: "put",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         postId: id,
-  //         userId: user.name,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((result) => {
-  //         const newData = pics.map((item) => {
-  //           if (item._id === result._id) {
-  //             return result;
-  //           } else {
-  //             return item;
-  //           }
-  //         });
-  //         setPics(newData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  //   const unlikePost = (id) => {
-  //     fetch(`${API}/unlike`, {
-  //       method: "put",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         postId: id,
-  //         userId: user.name,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((result) => {
-  //         const newData = pics.map((item) => {
-  //           if (item._id === result._id) {
-  //             return result;
-  //           } else {
-  //             return item;
-  //           }
-  //         });
-  //         setPics(newData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  //   const deletePost = (postid) => {
-  //     fetch(`${API}/post/delete/${user._id}/${postid}`, {
-  //       method: "delete",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((result) => {
-  //         const newData = pics.filter((item) => {
-  //           return item._id !== result._id;
-  //         });
-  //         setPics(newData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  //   const makeComment = (text, id) => {
-  //     fetch(`${API}/comment`, {
-  //       method: "put",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         text: text,
-  //         postId: id,
-  //         userName: user.name,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((result) => {
-  //         console.log(result);
-  //         const newData = pics.map((item) => {
-  //           if (item._id === result._id) {
-  //             return result;
-  //           } else {
-  //             return item;
-  //           }
-  //         });
-  //         setPics(newData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
-
-  //   const deleteComment = (cId, id) => {
-  //     fetch(`${API}/comment/delete`, {
-  //       method: "put",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         commentId: cId,
-  //         postId: id,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((result) => {
-  //         console.log(result);
-  //         const newData = pics.map((item) => {
-  //           if (item._id === result._id) {
-  //             return result;
-  //           } else {
-  //             return item;
-  //           }
-  //         });
-  //         setPics(newData);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   };
   return (
     <App>
       {!isAuthenticated() && <Redirect to="/signup" />}
