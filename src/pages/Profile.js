@@ -87,7 +87,7 @@ const Profile = () => {
 
   return (
     <App>
-      {userDetails.username && dp.length > 0 ? (
+      {userDetails.profile && dp.length > 0 ? (
         <div style={{ maxWidth: "550px", margin: "0px auto" }}>
           <div
             style={{

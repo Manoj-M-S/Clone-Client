@@ -72,7 +72,91 @@ const UserProfile = () => {
   return (
     <App>
       <>
-        {!isAuthenticated() && <Redirect to="/signup" />}
+        {isAuthenticated() ? (
+          userProfile.profile ? (
+            <div style={{ maxWidth: "550px", margin: "0px auto" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  margin: "18px 0px",
+                  borderBottom: "1px solid grey",
+                }}
+              >
+                <div>
+                  <object
+                    data={userProfile.profile}
+                    style={{
+                      width: "160px",
+                      height: "160px",
+                      borderRadius: "80px",
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: "160px",
+                        height: "160px",
+                        borderRadius: "80px",
+                      }}
+                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                      alt=""
+                    />
+                  </object>
+                </div>
+                <div>
+                  <h4>{userProfile.username}</h4>
+                  <h5>{userProfile.useremail}</h5>
+                  <div
+                    style={{
+                      display: "Flex",
+                      justifyContent: "space-between",
+                      width: "108%",
+                    }}
+                  >
+                    <h6>{userProfile.posts.length} posts</h6>
+                    <h6>{userProfile.followers.length} Followers</h6>
+                    <h6>{userProfile.following.length} Following</h6>
+                  </div>
+                  <div style={{ padding: "10px 0px " }}>
+                    {userProfile.followers.includes(user.name) ? (
+                      <button
+                        className="btn waves-effect waves-light #ff1744 blue accent-3"
+                        onClick={() => unfollowUser()}
+                      >
+                        Unfollow
+                      </button>
+                    ) : (
+                      <button
+                        className="btn waves-effect waves-light #ff1744 blue accent-3"
+                        onClick={() => followUser()}
+                      >
+                        Follow
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="gallery">
+                {userProfile.posts.map((item) => {
+                  return (
+                    <img
+                      key={item._id}
+                      className="item"
+                      alt={item.title}
+                      src={item.photo}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <h2>Loading!</h2>
+          )
+        ) : (
+          <Redirect to="/signup" />
+        )}
+
+        {/* {!isAuthenticated() && <Redirect to="/signup" />}
         {isAuthenticated() && userProfile.posts ? (
           <div style={{ maxWidth: "550px", margin: "0px auto" }}>
             <div
@@ -151,7 +235,7 @@ const UserProfile = () => {
           </div>
         ) : (
           <h2>Loading!</h2>
-        )}
+        )} */}
       </>
     </App>
   );

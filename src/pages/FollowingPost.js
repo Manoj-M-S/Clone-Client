@@ -21,7 +21,7 @@ const Following = () => {
         });
     };
     preload();
-  }, [user._id, token]);
+  }, [user._id, token, pics]);
 
   const likePost = (id) => {
     fetch(`${API}/like`, {
@@ -159,103 +159,109 @@ const Following = () => {
 
   return (
     <App>
-      {!isAuthenticated() && <Redirect to="/signup" />}
-      {isAuthenticated() &&
-        pics.map((item) => {
-          return (
-            <div key={item._id}>
-              <div className="card home-card">
-                <span className="card-title">
-                  <h5 style={{ padding: "7px" }}>
-                    <Link
-                      to={
-                        item.userId !== user._id
-                          ? `/profile/${item.userId}`
-                          : `/profile`
-                      }
-                    >
-                      {item.postedBy}
-                    </Link>
-                    {item.postedBy === user.name && (
+      {isAuthenticated() ? (
+        pics.length > 0 ? (
+          pics.map((item) => {
+            return (
+              <div key={item._id}>
+                <div className="card home-card">
+                  <span className="card-title">
+                    <h5 style={{ padding: "7px" }}>
+                      <Link
+                        to={
+                          item.userId !== user._id
+                            ? `/profile/${item.userId}`
+                            : `/profile`
+                        }
+                      >
+                        {item.postedBy}
+                      </Link>
+                      {item.postedBy === user.name && (
+                        <i
+                          className="material-icons"
+                          style={{ float: "right" }}
+                          onClick={() => {
+                            deletePost(item._id);
+                          }}
+                        >
+                          delete
+                        </i>
+                      )}
+                    </h5>
+                    {/* <h6 style={{ padding: "10px" }}>{item.createdAt}</h6> */}
+                  </span>
+                  <div className="card-image">
+                    <img alt={item.title} src={item.photo} />
+                  </div>
+                  <div className="card-content">
+                    {item.like.includes(user.name) ? (
                       <i
                         className="material-icons"
-                        style={{ float: "right" }}
                         onClick={() => {
-                          deletePost(item._id);
+                          unlikePost(item._id);
                         }}
                       >
-                        delete
+                        thumb_down
+                      </i>
+                    ) : (
+                      <i
+                        className="material-icons"
+                        onClick={() => {
+                          likePost(item._id);
+                        }}
+                      >
+                        thumb_up
                       </i>
                     )}
-                  </h5>
-                  {/* <h6 style={{ padding: "10px" }}>{item.createdAt}</h6> */}
-                </span>
-                <div className="card-image">
-                  <img alt={item.title} src={item.photo} />
-                </div>
-                <div className="card-content">
-                  {item.like.includes(user.name) ? (
-                    <i
-                      className="material-icons"
-                      onClick={() => {
-                        unlikePost(item._id);
-                      }}
-                    >
-                      thumb_down
-                    </i>
-                  ) : (
-                    <i
-                      className="material-icons"
-                      onClick={() => {
-                        likePost(item._id);
-                      }}
-                    >
-                      thumb_up
-                    </i>
-                  )}
 
-                  <h6>{item.like.length} Likes</h6>
-                  <h6>
-                    <b>Title : </b>
-                    {item.title}
-                  </h6>
-                  <h6>
-                    <b>Body :</b> {item.body}
-                  </h6>
-                  {item.comment.map((record) => {
-                    return (
-                      <h6 key={record._id}>
-                        <span style={{ fontWeight: "500" }}>
-                          <b>{record.postedBy} : </b>
-                        </span>
-                        {record.text}
-                        {record.postedBy === user.name && (
-                          <i
-                            className="material-icons"
-                            style={{ float: "right" }}
-                            onClick={() => {
-                              deleteComment(record._id, item._id);
-                            }}
-                          >
-                            delete
-                          </i>
-                        )}
-                      </h6>
-                    );
-                  })}
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      makeComment(e.target[0].value, item._id);
-                    }}
-                  >
-                    <input type="text" placeholder="add a comment" />
-                  </form>
+                    <h6>{item.like.length} Likes</h6>
+                    <h6>
+                      <b>Title : </b>
+                      {item.title}
+                    </h6>
+                    <h6>
+                      <b>Body :</b> {item.body}
+                    </h6>
+                    {item.comment.map((record) => {
+                      return (
+                        <h6 key={record._id}>
+                          <span style={{ fontWeight: "500" }}>
+                            <b>{record.postedBy} : </b>
+                          </span>
+                          {record.text}
+                          {record.postedBy === user.name && (
+                            <i
+                              className="material-icons"
+                              style={{ float: "right" }}
+                              onClick={() => {
+                                deleteComment(record._id, item._id);
+                              }}
+                            >
+                              delete
+                            </i>
+                          )}
+                        </h6>
+                      );
+                    })}
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        makeComment(e.target[0].value, item._id);
+                      }}
+                    >
+                      <input type="text" placeholder="add a comment" />
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <h2>Loading!</h2>
+        )
+      ) : (
+        <Redirect to="/signup" />
+      )}
     </App>
   );
 };
