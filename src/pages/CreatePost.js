@@ -24,7 +24,8 @@ const CreatePost = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        photo = data.url;
+        console.log(data);
+        photo = data.secure_url;
       })
       .then(() =>
         CreateaPost(photo, postedBy, API, user, token, title, body, userId)

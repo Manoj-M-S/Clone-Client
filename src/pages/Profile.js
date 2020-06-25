@@ -24,8 +24,8 @@ const Profile = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          photo = data.url;
-          setDp(data.url);
+          photo = data.secure_url;
+          setDp(data.secure_url);
           M.toast({
             html: "Picture Updated Successfully",
             classes: "#43a047 green darken-1",

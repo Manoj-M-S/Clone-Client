@@ -43,7 +43,7 @@ const Post = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        photo = data.url;
+        photo = data.secure_url;
       })
       .then(() => Update(title, body, photo, token, postId))
       .catch((err) => {
