@@ -9,20 +9,19 @@ const Following = () => {
   const { user, token } = isAuthenticated();
 
   useEffect(() => {
+    const preload = () => {
+      fetch(`${API}/feed/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setPics(result);
+        });
+    };
     preload();
-  }, []);
-
-  const preload = () => {
-    fetch(`${API}/feed/${user._id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setPics(result);
-      });
-  };
+  }, [user._id, token]);
 
   const likePost = (id) => {
     fetch(`${API}/like`, {

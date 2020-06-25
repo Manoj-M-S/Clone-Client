@@ -11,16 +11,15 @@ const UserProfile = () => {
   const { userId } = useParams();
 
   useEffect(() => {
+    const preload = () => {
+      fetch(`${API}/profile/${userId}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setProfile(result);
+        });
+    };
     preload();
-  }, []);
-
-  const preload = () => {
-    fetch(`${API}/profile/${userId}`)
-      .then((res) => res.json())
-      .then((result) => {
-        setProfile(result);
-      });
-  };
+  }, [userId]);
 
   const followUser = () => {
     fetch(`${API}/follow`, {

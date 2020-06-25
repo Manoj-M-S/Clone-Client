@@ -10,9 +10,9 @@ const Profile = () => {
   const [dp, setDp] = useState([]);
   const { user, token } = isAuthenticated();
   const [image, setImage] = useState("");
-  let photo = "";
 
   useEffect(() => {
+    let photo = "";
     if (image) {
       const data = new FormData();
       data.append("file", image);
@@ -24,8 +24,6 @@ const Profile = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          window.location.reload();
-
           photo = data.url;
           setDp(data.url);
           M.toast({
@@ -33,40 +31,39 @@ const Profile = () => {
             classes: "#43a047 green darken-1",
           });
         })
-        .then(() => updateProfilePic(photo, API, user, token))
+        .then(() => updateProfilePic(photo, user._id, token))
         .catch((err) => {
           console.log(err);
         });
     }
-  }, [image]);
+  }, [image, token, user._id]);
 
   const updatePic = (file) => {
     setImage(file);
   };
 
   useEffect(() => {
-    preload();
-  }, []);
-
-  const preload = () => {
-    fetch(`${API}/myposts/${user._id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setPics(result);
+    const preload = () => {
+      fetch(`${API}/myposts/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .then(
-        fetch(`${API}/profile/${user._id}`)
-          .then((res) => res.json())
-          .then((result) => {
-            setDetails(result);
-            setDp(result.profile);
-          })
-      );
-  };
+        .then((res) => res.json())
+        .then((result) => {
+          setPics(result);
+        })
+        .then(
+          fetch(`${API}/profile/${user._id}`)
+            .then((res) => res.json())
+            .then((result) => {
+              setDetails(result);
+              setDp(result.profile);
+            })
+        );
+    };
+    preload();
+  }, [user._id, token]);
 
   const deletePost = (postid) => {
     fetch(`${API}/post/delete/${user._id}/${postid}`, {
