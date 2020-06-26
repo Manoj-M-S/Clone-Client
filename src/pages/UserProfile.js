@@ -23,7 +23,7 @@ const UserProfile = () => {
       }
     };
     preload();
-  }, []);
+  });
 
   const followUser = () => {
     fetch(`${API}/follow`, {

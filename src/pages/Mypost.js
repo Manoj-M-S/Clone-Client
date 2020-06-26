@@ -33,7 +33,7 @@ const Post = () => {
       }
     };
     preload();
-  }, [postId, token]);
+  });
 
   let photo = "";
   const UpdatePost = () => {

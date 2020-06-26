@@ -69,7 +69,7 @@ const Profile = () => {
       }
     };
     preload();
-  }, []);
+  });
 
   const deletePost = (postid) => {
     fetch(`${API}/post/delete/${user._id}/${postid}`, {
