@@ -52,7 +52,7 @@ export const login = (user) => {
           classes: "#43a047 green darken-1",
         });
         setTimeout(() => {
-          window.location.href = "/profile";
+          window.location.href = "/";
         }, 250);
       } else {
         M.toast({
