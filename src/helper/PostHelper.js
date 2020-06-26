@@ -1,5 +1,7 @@
 import M from "materialize-css";
 import { API } from "../backend";
+import { isAuthenticated } from "../helper/AuthHelper";
+const { user, token } = isAuthenticated();
 
 export const CreateaPost = (
   photo,
@@ -47,7 +49,7 @@ export const CreateaPost = (
     .catch((error) => console.log(error));
 };
 
-export const updateProfilePic = (photo, user, token) => {
+export const updateProfilePic = (photo) => {
   fetch(`${API}/profile/pic/${user}`, {
     method: "put",
     headers: {

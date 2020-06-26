@@ -10,18 +10,22 @@ const Following = () => {
 
   useEffect(() => {
     const preload = () => {
-      fetch(`${API}/feed/${user._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          setPics(result);
-        });
+      if (user) {
+        fetch(`${API}/feed/${user._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            setPics(result);
+          });
+      } else {
+        return <Redirect to="/signup" />;
+      }
     };
     preload();
-  }, [user._id, token, pics]);
+  }, []);
 
   const likePost = (id) => {
     fetch(`${API}/like`, {

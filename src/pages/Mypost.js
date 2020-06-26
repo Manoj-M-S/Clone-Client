@@ -15,18 +15,22 @@ const Post = () => {
 
   useEffect(() => {
     const preload = () => {
-      fetch(`${API}/post/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          setPics(result);
-          setTitle(result.title);
-          setBody(result.body);
-          setImage(result.photo);
-        });
+      if (user) {
+        fetch(`${API}/post/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            setPics(result);
+            setTitle(result.title);
+            setBody(result.body);
+            setImage(result.photo);
+          });
+      } else {
+        return <Redirect to="/signup" />;
+      }
     };
     preload();
   }, [postId, token]);
@@ -53,55 +57,60 @@ const Post = () => {
 
   return (
     <App>
-      {!isAuthenticated() && <Redirect to="/signup" />}
-      {isAuthenticated() && user.name === pics.postedBy && (
-        <div className="card home-card">
-          <h5 style={{ padding: "7px" }}>Edit Post</h5>
-          <div className="card-image">
-            <img alt={pics.title} src={pics.photo} />
-          </div>
-          <div className="card-content">
-            <h5>
-              <b>Title : </b>
-              {pics.title}
-            </h5>
-            <h5>
-              <b>Body :</b> {pics.body}
-            </h5>
-          </div>
-          <div className="card field">
-            <input
-              type="text"
-              placeholder="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Body"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-            />
-            <div className="file-field input">
-              <div className=" btn waves-effect waves-light #ff1744 red accent-3">
-                <span>Upload Image</span>
-                <input
-                  type="file"
-                  onChange={(e) => setImage(e.target.files[0])}
-                />
-              </div>
-              <div className="file-path-wrapper">
-                <input className="file-path validate" type="text" />
-              </div>
+      {isAuthenticated() ? (
+        user.name === pics.postedBy ? (
+          <div className="card home-card">
+            <h5 style={{ padding: "7px" }}>Edit Post</h5>
+            <div className="card-image">
+              <img alt={pics.title} src={pics.photo} />
             </div>
-            <button
-              className="btn waves-effect waves-light #ff1744 red accent-3"
-              onClick={() => UpdatePost()}
-            >
-              Update Post
-            </button>
+            <div className="card-content">
+              <h5>
+                <b>Title : </b>
+                {pics.title}
+              </h5>
+              <h5>
+                <b>Body :</b> {pics.body}
+              </h5>
+            </div>
+            <div className="card field">
+              <input
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Body"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+              />
+              <div className="file-field input">
+                <div className=" btn waves-effect waves-light #ff1744 red accent-3">
+                  <span>Upload Image</span>
+                  <input
+                    type="file"
+                    onChange={(e) => setImage(e.target.files[0])}
+                  />
+                </div>
+                <div className="file-path-wrapper">
+                  <input className="file-path validate" type="text" />
+                </div>
+              </div>
+              <button
+                className="btn waves-effect waves-light #ff1744 red accent-3"
+                onClick={() => UpdatePost()}
+              >
+                Update Post
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <h2>Loading!</h2>
+        )
+      ) : (
+        <Redirect to="/signup" />
       )}
     </App>
   );

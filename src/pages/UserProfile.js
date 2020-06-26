@@ -12,14 +12,18 @@ const UserProfile = () => {
 
   useEffect(() => {
     const preload = () => {
-      fetch(`${API}/profile/${userId}`)
-        .then((res) => res.json())
-        .then((result) => {
-          setProfile(result);
-        });
+      if (user) {
+        fetch(`${API}/profile/${userId}`)
+          .then((res) => res.json())
+          .then((result) => {
+            setProfile(result);
+          });
+      } else {
+        return <Redirect to="/signup" />;
+      }
     };
     preload();
-  }, [userId]);
+  }, []);
 
   const followUser = () => {
     fetch(`${API}/follow`, {

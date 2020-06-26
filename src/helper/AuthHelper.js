@@ -85,7 +85,7 @@ export const logout = () => {
       .then(() =>
         setTimeout(() => {
           window.location.href = "/signup";
-        }, 250)
+        }, 1000)
       )
       .catch((error) => console.log(error));
   }
