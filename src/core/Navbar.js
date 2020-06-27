@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import { Link } from "react-router-dom";
-import { logout, isAuthenticated } from "../helper/AuthHelper";
-
+import { Link, useHistory } from "react-router-dom";
+import { isAuthenticated, logout } from "../helper/AuthHelper";
 const NavBar = () => {
+  const history = useHistory();
   return (
     <nav>
       <div className="nav-wrapper white">
@@ -51,7 +51,11 @@ const NavBar = () => {
               <li>
                 <button
                   className="btn waves-effect waves-light #ff1744 red darken-1"
-                  onClick={() => logout()}
+                  onClick={() => {
+                    logout(() => {
+                      history.push("/signup");
+                    });
+                  }}
                 >
                   logout
                 </button>

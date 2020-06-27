@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import App from "../App";
 import { isAuthenticated } from "../helper/AuthHelper";
 import { API } from "../backend";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams, useHistory } from "react-router-dom";
 import { Update } from "../helper/PostHelper";
 
 const Post = () => {
@@ -12,28 +12,25 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [image, setImage] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
     const preload = () => {
-      if (user) {
-        fetch(`${API}/post/${postId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((result) => {
-            setPics(result);
-            setTitle(result.title);
-            setBody(result.body);
-            setImage(result.photo);
-          });
-      } else {
-        return <Redirect to="/signup" />;
-      }
+      fetch(`${API}/post/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setPics(result);
+          setTitle(result.title);
+          setBody(result.body);
+          setImage(result.photo);
+        });
     };
     preload();
-  });
+  }, []);
 
   let photo = "";
   const UpdatePost = () => {

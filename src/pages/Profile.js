@@ -4,7 +4,7 @@ import { isAuthenticated } from "../helper/AuthHelper";
 import { updateProfilePic } from "../helper/PostHelper";
 import { API } from "../backend";
 import M from "materialize-css";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 const Profile = () => {
   const [mypics, setPics] = useState([]);
@@ -69,7 +69,7 @@ const Profile = () => {
       }
     };
     preload();
-  });
+  }, []);
 
   const deletePost = (postid) => {
     fetch(`${API}/post/delete/${user._id}/${postid}`, {
@@ -89,7 +89,6 @@ const Profile = () => {
         console.log(err);
       });
   };
-  // const editpost = (postid) => {};
 
   return (
     <App>
@@ -176,14 +175,8 @@ const Profile = () => {
                         >
                           delete
                         </i>
-                        <i
-                          className="material-icons"
-                          style={{ float: "left" }}
-                          onClick={() => {
-                            window.location.href = `/editpost/${item._id}/`;
-                          }}
-                        >
-                          create
+                        <i className="material-icons" style={{ float: "left" }}>
+                          <Link to={`/editpost/${item._id}/`}>create </Link>
                         </i>
                       </div>
                     </div>
