@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import App from "../App";
 import { isAuthenticated } from "../helper/AuthHelper";
 import { API } from "../backend";
-import { Redirect, useParams, useHistory } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { Update } from "../helper/PostHelper";
 
 const Post = () => {
@@ -12,7 +12,6 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [image, setImage] = useState("");
-  const history = useHistory();
 
   useEffect(() => {
     const preload = () => {
@@ -30,7 +29,7 @@ const Post = () => {
         });
     };
     preload();
-  }, []);
+  }, [postId, token]);
 
   let photo = "";
   const UpdatePost = () => {

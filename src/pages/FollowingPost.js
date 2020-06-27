@@ -25,7 +25,7 @@ const Following = () => {
       }
     };
     preload();
-  }, []);
+  }, [user, token]);
 
   const likePost = (id) => {
     fetch(`${API}/like`, {

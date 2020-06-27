@@ -10,22 +10,19 @@ const Home = () => {
 
   useEffect(() => {
     const preload = () => {
-      if (user) {
-        fetch(`${API}/posts`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((result) => {
-            setPics(result);
-          });
-      } else {
-        return <Redirect to="/signup" />;
-      }
+      fetch(`${API}/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setPics(result);
+        });
     };
+
     preload();
-  }, []);
+  }, [token]);
 
   const likePost = (id) => {
     fetch(`${API}/like`, {
