@@ -15,22 +15,22 @@ const Post = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const preload = () => {
-      fetch(`${API}/post/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((result) => {
-          setPics(result);
-          setTitle(result.title);
-          setBody(result.body);
-          setImage(result.photo);
-        });
-    };
     preload();
   }, []);
+  const preload = () => {
+    fetch(`${API}/post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setPics(result);
+        setTitle(result.title);
+        setBody(result.body);
+        setImage(result.photo);
+      });
+  };
 
   let photo = "";
   const UpdatePost = () => {

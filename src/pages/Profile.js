@@ -45,32 +45,31 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const preload = () => {
-      if (user) {
-        fetch(`${API}/myposts/${user._id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((result) => {
-            setPics(result);
-          })
-          .then(
-            fetch(`${API}/profile/${user._id}`)
-              .then((res) => res.json())
-              .then((result) => {
-                setDetails(result);
-                setDp(result.profile);
-              })
-          );
-      } else {
-        return <Redirect to="/signup" />;
-      }
-    };
     preload();
   }, []);
-
+  const preload = () => {
+    if (user) {
+      fetch(`${API}/myposts/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setPics(result);
+        })
+        .then(
+          fetch(`${API}/profile/${user._id}`)
+            .then((res) => res.json())
+            .then((result) => {
+              setDetails(result);
+              setDp(result.profile);
+            })
+        );
+    } else {
+      return <Redirect to="/signup" />;
+    }
+  };
   const deletePost = (postid) => {
     fetch(`${API}/post/delete/${user._id}/${postid}`, {
       method: "delete",

@@ -11,19 +11,20 @@ const UserProfile = () => {
   const { userId } = useParams();
 
   useEffect(() => {
-    const preload = () => {
-      if (user) {
-        fetch(`${API}/profile/${userId}`)
-          .then((res) => res.json())
-          .then((result) => {
-            setProfile(result);
-          });
-      } else {
-        return <Redirect to="/signup" />;
-      }
-    };
     preload();
-  });
+  }, []);
+
+  const preload = () => {
+    if (user) {
+      fetch(`${API}/profile/${userId}`)
+        .then((res) => res.json())
+        .then((result) => {
+          setProfile(result);
+        });
+    } else {
+      return <Redirect to="/signup" />;
+    }
+  };
 
   const followUser = () => {
     fetch(`${API}/follow`, {

@@ -9,24 +9,23 @@ const Following = () => {
   const { user, token } = isAuthenticated();
 
   useEffect(() => {
-    const preload = () => {
-      if (user) {
-        fetch(`${API}/feed/${user._id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => res.json())
-          .then((result) => {
-            setPics(result);
-          });
-      } else {
-        return <Redirect to="/signup" />;
-      }
-    };
     preload();
   }, []);
-
+  const preload = () => {
+    if (user) {
+      fetch(`${API}/feed/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          setPics(result);
+        });
+    } else {
+      return <Redirect to="/signup" />;
+    }
+  };
   const likePost = (id) => {
     fetch(`${API}/like`, {
       method: "put",
