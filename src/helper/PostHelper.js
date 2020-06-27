@@ -66,38 +66,38 @@ export const updateProfilePic = (photo) => {
     });
 };
 
-export const Update = (title, body, photo, token, postId) => {
-  fetch(`${API}/post/update/${postId}`, {
-    method: "put",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      photo: photo,
-      title: title,
-      body: body,
-      postId: postId,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.error) {
-        M.toast({
-          html: "Post Updated Successful",
-          classes: "#43a047 green darken-1",
-        });
-        setTimeout(() => {
-          window.location.href = `/editpost/${postId}`;
-        }, 2000);
-      } else {
-        M.toast({
-          html: data.error,
-          classes: "#c62828 red darken-2",
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// export const Update = (title, body, photo, token, postId) => {
+//   fetch(`${API}/post/update/${postId}`, {
+//     method: "put",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify({
+//       photo: photo,
+//       title: title,
+//       body: body,
+//       postId: postId,
+//     }),
+//   })
+//     .then((res) => res.json())
+//     .then((data) => {
+//       if (!data.error) {
+//         M.toast({
+//           html: "Post Updated Successful",
+//           classes: "#43a047 green darken-1",
+//         });
+//         setTimeout(() => {
+//           window.location.href = `/editpost/${postId}`;
+//         }, 2000);
+//       } else {
+//         M.toast({
+//           html: data.error,
+//           classes: "#c62828 red darken-2",
+//         });
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import App from "../App";
 import { isAuthenticated } from "../helper/AuthHelper";
 import { API } from "../backend";
-import { Redirect, useParams } from "react-router-dom";
-import { Update } from "../helper/PostHelper";
+import M from "materialize-css";
 
+import { Redirect, useParams, useHistory } from "react-router-dom";
 const Post = () => {
   const [pics, setPics] = useState([]);
   const { user, token } = isAuthenticated();
@@ -12,6 +12,7 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [image, setImage] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
     const preload = () => {
@@ -29,7 +30,7 @@ const Post = () => {
         });
     };
     preload();
-  }, [postId, token]);
+  }, []);
 
   let photo = "";
   const UpdatePost = () => {
@@ -50,7 +51,41 @@ const Post = () => {
         console.log(err);
       });
   };
-
+  const Update = (title, body, photo, token, postId) => {
+    fetch(`${API}/post/update/${postId}`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        photo: photo,
+        title: title,
+        body: body,
+        postId: postId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          M.toast({
+            html: "Post Updated Successful",
+            classes: "#43a047 green darken-1",
+          });
+          setTimeout(() => {
+            history.push(`/profile`);
+          }, 1000);
+        } else {
+          M.toast({
+            html: data.error,
+            classes: "#c62828 red darken-2",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <App>
       {isAuthenticated() ? (
