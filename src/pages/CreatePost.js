@@ -35,7 +35,7 @@ const CreatePost = () => {
       )
       .then(() =>
         setTimeout(() => {
-          history.push("/");
+          history.push("/profile");
         }, 2500)
       )
       .catch((err) => {
