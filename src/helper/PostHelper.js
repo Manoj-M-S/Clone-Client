@@ -36,9 +36,6 @@ export const CreateaPost = (
           html: "Post Created Successful",
           classes: "#43a047 green darken-1",
         });
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 2000);
       } else {
         M.toast({
           html: data.error,

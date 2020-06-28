@@ -44,7 +44,7 @@ const UserProfile = () => {
           classes: "#43a047 green darken-1",
         });
         setTimeout(() => {
-          history.push("/");
+          history.push("/following");
         }, 1000);
       })
       .catch((err) => {
@@ -73,7 +73,7 @@ const UserProfile = () => {
           classes: "#43a047 green darken-1",
         });
         setTimeout(() => {
-          history.push("/");
+          history.push("/following");
         }, 1000);
       })
       .catch((err) => {

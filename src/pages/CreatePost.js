@@ -3,7 +3,10 @@ import App from "../App";
 import { isAuthenticated } from "../helper/AuthHelper";
 import { API } from "../backend";
 import { CreateaPost } from "../helper/PostHelper";
+import { useHistory } from "react-router-dom";
+
 const CreatePost = () => {
+  const history = useHistory();
   const { user, token } = isAuthenticated();
 
   const [title, setTitle] = useState("");
@@ -29,6 +32,11 @@ const CreatePost = () => {
       })
       .then(() =>
         CreateaPost(photo, postedBy, API, user, token, title, body, userId)
+      )
+      .then(() =>
+        setTimeout(() => {
+          history.push("/");
+        }, 2500)
       )
       .catch((err) => {
         console.log(err);
