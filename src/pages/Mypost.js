@@ -15,9 +15,6 @@ const Post = () => {
   const history = useHistory();
 
   useEffect(() => {
-    preload();
-  }, []);
-  const preload = () => {
     fetch(`${API}/post/${postId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -30,7 +27,7 @@ const Post = () => {
         setBody(result.body);
         setImage(result.photo);
       });
-  };
+  }, [postId, token]);
 
   let photo = "";
   const UpdatePost = () => {

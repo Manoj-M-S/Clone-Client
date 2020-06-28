@@ -45,10 +45,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    preload();
-  }, []);
-  const preload = () => {
-    if (user) {
+    if (user._id) {
       fetch(`${API}/myposts/${user._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -69,7 +66,8 @@ const Profile = () => {
     } else {
       return <Redirect to="/signup" />;
     }
-  };
+  }, [user._id, token]);
+
   const deletePost = (postid) => {
     fetch(`${API}/post/delete/${user._id}/${postid}`, {
       method: "delete",

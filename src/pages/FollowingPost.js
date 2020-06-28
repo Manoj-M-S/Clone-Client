@@ -9,10 +9,7 @@ const Following = () => {
   const { user, token } = isAuthenticated();
 
   useEffect(() => {
-    preload();
-  }, []);
-  const preload = () => {
-    if (user) {
+    if (user._id) {
       fetch(`${API}/feed/${user._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -25,7 +22,8 @@ const Following = () => {
     } else {
       return <Redirect to="/signup" />;
     }
-  };
+  }, [user._id, token]);
+
   const likePost = (id) => {
     fetch(`${API}/like`, {
       method: "put",

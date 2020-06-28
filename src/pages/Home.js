@@ -9,9 +9,6 @@ const Home = () => {
   const { user, token } = isAuthenticated();
 
   useEffect(() => {
-    preload();
-  }, []);
-  const preload = () => {
     fetch(`${API}/posts`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -21,7 +18,8 @@ const Home = () => {
       .then((result) => {
         setPics(result);
       });
-  };
+  }, [token]);
+
   const likePost = (id) => {
     fetch(`${API}/like`, {
       method: "put",
