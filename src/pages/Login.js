@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import App from "../App";
 import { API } from "../backend";
 import M from "materialize-css";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
   const signupform = () => {
     const login = (user) => {
@@ -28,7 +30,7 @@ const Login = () => {
               classes: "#43a047 green darken-1",
             });
             setTimeout(() => {
-              window.location.href = "/";
+              history.push("/");
             }, 250);
           } else {
             M.toast({

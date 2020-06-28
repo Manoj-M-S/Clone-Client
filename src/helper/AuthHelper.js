@@ -1,36 +1,4 @@
 import { API } from "../backend";
-import M from "materialize-css";
-
-export const signup = (user) => {
-  return fetch(`${API}/signup`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      if (!data.error) {
-        M.toast({
-          html: "Signup Successful",
-          classes: "#43a047 green darken-1",
-        });
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 2000);
-      } else {
-        M.toast({
-          html: data.error,
-          classes: "#c62828 red darken-2",
-        });
-      }
-    })
-    .catch((error) => console.log(error));
-};
 
 // export const login = (user) => {
 //   return fetch(`${API}/login`, {

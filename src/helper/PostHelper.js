@@ -50,7 +50,7 @@ export const CreateaPost = (
 };
 
 export const updateProfilePic = (photo) => {
-  fetch(`${API}/profile/pic/${user}`, {
+  fetch(`${API}/profile/pic/${user._id}`, {
     method: "put",
     headers: {
       "Content-Type": "application/json",

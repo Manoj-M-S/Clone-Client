@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import App from "../App";
-import { Link } from "react-router-dom";
-import { signup } from "../helper/AuthHelper";
+import { Link, useHistory } from "react-router-dom";
+import { API } from "../backend";
+import M from "materialize-css";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -9,6 +10,38 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [image, setImage] = useState("");
   let photo = "";
+  const history = useHistory();
+
+  const signup = (user) => {
+    return fetch(`${API}/signup`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (!data.error) {
+          M.toast({
+            html: "Signup Successful",
+            classes: "#43a047 green darken-1",
+          });
+          setTimeout(() => {
+            history.push("/");
+          }, 250);
+        } else {
+          M.toast({
+            html: data.error,
+            classes: "#c62828 red darken-2",
+          });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
   const uploadPic = () => {
     if (image) {
